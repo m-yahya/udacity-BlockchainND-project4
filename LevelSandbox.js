@@ -54,5 +54,5 @@ class LevelSandbox {
     }
 }
 
-module.export = LevelSandbox;
+module.exports = LevelSandbox;
 
