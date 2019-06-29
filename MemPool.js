@@ -80,6 +80,13 @@ class MemPool {
         }
     }
 
+    // remove address from mempoolValid
+    cleanMempoolValid(walletAddress) {
+        if (this.mempoolValid[walletAddress] != undefined) {
+            delete this.mempoolValid[walletAddress];
+        }
+    }
+
     // validate request by wallet
     validateRequestByWallet(walletAddress, signature) {
         let response = {};
@@ -123,11 +130,7 @@ class MemPool {
 
 }
 
-// let test = new MemPool();
-// let counter = 0;
-// setInterval(function () {
-//     console.log(test.addRequestValidation('fjsdkla'));
-//     console.log(test.mempool['fjsdkla']);
-//     counter++;
-// }, 10000);
+module.exports = MemPool;
+
+
 
