@@ -13,14 +13,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // set up database
 const blockchain = new Blockchain();
 
-function handle_err(err, res) {
-    if (err.type === "NotFoundError") {
-        res.status(404).send('Block not found');
-    } else {
-        console.log(err)
-        res.status(501).send('Unknown error reading block');
-    }
-}
 // set up get endpoint
 app.get('/block/:height', (req, res) => {
     blockchain.getBlock(req.params.height).then(block => {
