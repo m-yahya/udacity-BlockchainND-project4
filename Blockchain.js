@@ -45,6 +45,16 @@ class Blockchain {
     async getBlock(height) {
         return JSON.parse(await this.bd.getLevelDBData(height));
     }
+
+    // get block by hash
+    async getBlockByHash(hash) {
+        return JSON.parse(await this.bd.getBlockByHash(hash));
+    }
+
+    // get blocks by address
+    async getBlockByAddress(address) {
+        return await this.bd.getBlocksByAddress(address);
+    }
     // Validate if Block is being tampered by Block Height
     validateBlock(height) {
         return new Promise((resolve, reject) => {

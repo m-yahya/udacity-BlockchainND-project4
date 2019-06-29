@@ -52,6 +52,47 @@ class LevelSandbox {
                 })
         });
     }
+    // get block by hash
+    getBlockByHash(hash) {
+        let self = this;
+        let block;
+        return new Promise((resolve, reject) => {
+            self.db.createReadStream()
+                .on('data', data => {
+                    if (JSON.parse(data.value).hash == hash) {
+                        block = data.value;
+                    }
+                })
+                .on('error', err => {
+                    console.log(err);
+                    reject();
+                })
+                .on('close', () => {
+                    resolve(block);
+                })
+        })
+    }
+
+    // get block by address
+    getBlocksByAddress(address) {
+        let self = this;
+        let blocks = [];
+        return new Promise((resolve, reject) => {
+            self.db.createReadStream()
+                .on('data', data => {
+                    if (JSON.parse(data.value).body.address == address) {
+                        blocks.push(data.value);
+                    }
+                })
+                .on('error', err => {
+                    console.log(err);
+                    reject();
+                })
+                .on('close', () => {
+                    resolve(blocks);
+                })
+        })
+    }
 }
 
 module.exports = LevelSandbox;
