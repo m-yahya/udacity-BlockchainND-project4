@@ -4,7 +4,7 @@ class Block {
         this.hash = '';
         this.time = 0;
         this.height = 0;
-        this.data = data;
+        this.body = data;
         this.previousBlockHash = '';
     }
 }
