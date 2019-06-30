@@ -20,7 +20,6 @@ class StarController {
 
     // decode block
     getDecodedBlock(block) {
-        block = JSON.parse(block);
         block.body.star.storyDecoded = hex2ascii(block.body.star.story);
         return block;
     }
@@ -98,7 +97,7 @@ class StarController {
 
     // get star block by index endpoint
     getStarByIndex() {
-        this.app.get('/stars/index:index', (req, res) => {
+        this.app.get('/block/:index', (req, res) => {
             this.blockchain.getBlock(req.params.index).then(star => {
                 if (star == undefined) {
                     res.send({
@@ -135,7 +134,7 @@ class StarController {
             this.blockchain.getBlockByAddress(req.params.address).then(stars => {
                 if (stars != undefined && stars.length > 0) {
                     let starByAddress = [];
-                    stars.forEach(start => {
+                    stars.forEach(star => {
                         starByAddress.push(this.getDecodedBlock(star));
                     });
                     res.send(starByAddress);
