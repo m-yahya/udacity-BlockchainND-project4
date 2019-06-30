@@ -12,6 +12,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // set up database
 const blockchain = new Blockchain();
+// import endpoints from StarController
+const starController = require("./StarController")(app);
 
 // set up get endpoint
 app.get('/block/:height', (req, res) => {
