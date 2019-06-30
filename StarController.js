@@ -33,7 +33,16 @@ class StarController {
             let starToAdd = req.body.star;
 
             if (walletAddress && starToAdd && starToAdd.story != undefined) {
-                let body = new BodyObject(walletAddress, starToAdd);
+                let body = {
+                    'star': {
+                        'ra': starToAdd.ra,
+                        'dec': starToAdd.dec,
+                        'mag': starToAdd.mag,
+                        'cen': starToAdd.cen,
+                        'story': new Buffer.from(starToAdd.story).toString('hex')
+                    },
+                    'address': walletAddress
+                };
                 let validAddress = this.memPool.isInMempoolValid(walletAddress);
                 if (validAddress) {
                     let newBlock = new Block(body);
