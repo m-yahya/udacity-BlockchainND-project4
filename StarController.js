@@ -1,19 +1,19 @@
 const hex2ascii = require("hex2ascii");
-const BlockClass = require("./Block.js");
-const BlockchainClass = require("./Blockchain.js");
-const MemPoolClass = require("./MemPool.js");
+const Block = require("./Block.js");
+const Blockchain = require("./Blockchain.js");
+const MemPool = require("./MemPool.js");
 const BodyObject = require("./BodyObject.js");
 
 // Star controlle class
 class StarController {
     constructor(app) {
-        this.app();
-        this.memPool = new MemPoolClass();
-        this.blockchain = new BlockchainClass();
+        this.app = app;
+        this.memPool = new MemPool();
+        this.blockchain = new Blockchain();
         this.postNewBlock();
         this.requestValidation();
         this.validateRequestByWallet();
-        this.getBlockByIndex();
+        this.getStarByIndex();
         this.getStarByHash();
         this.getStarByAddress();
     }
@@ -34,11 +34,11 @@ class StarController {
 
             if (walletAddress && starToAdd && starToAdd.story != undefined) {
                 let body = new BodyObject(walletAddress, starToAdd);
-                let validAddress = this.MemPoolClass.isInMempoolValid(walletAddress);
+                let validAddress = this.memPool.isInMempoolValid(walletAddress);
                 if (validAddress) {
-                    let newBlock = new BlockClass(body);
-                    this.BlockchainClass.addBlock(newBlock).then(block => {
-                        this.MemPoolClass.cleanMempoolValid(walletAddress);
+                    let newBlock = new Block(body);
+                    this.blockchain.addBlock(newBlock).then(block => {
+                        this.memPool.cleanMempoolValid(walletAddress);
                         res.send(this.getDecodedBlock(block));
                     })
                 } else {
@@ -61,7 +61,7 @@ class StarController {
         this.app.post('/requestValidation', (req, res) => {
             let walletAddress = req.body.address;
             if (walletAddress != undefined && typeof walletAddress === 'string') {
-                res.send(this.MemPoolClass.addRequestValidation(walletAddress));
+                res.send(this.memPool.addRequestValidation(walletAddress));
             } else {
                 res.send({
                     success: 'false',
@@ -74,10 +74,10 @@ class StarController {
     // validate request by wallet endpoint
     validateRequestByWallet() {
         this.app.post('/message-signature/validate', (req, res) => {
-            let walletAddress = req.body.walletAddress;
+            let walletAddress = req.body.address;
             let signature = req.body.signature;
             if (walletAddress && signature != undefined && typeof walletAddress && typeof signature === 'string') {
-                res.send(this.MemPoolClass.validateRequestByWallet(walletAddress, signature))
+                res.send(this.memPool.validateRequestByWallet(walletAddress, signature))
             } else {
                 res.send({
                     success: 'false',
