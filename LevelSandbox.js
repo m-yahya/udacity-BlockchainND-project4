@@ -59,8 +59,11 @@ class LevelSandbox {
         return new Promise((resolve, reject) => {
             self.db.createReadStream()
                 .on('data', data => {
-                    if (JSON.parse(data.value).hash == hash) {
+                    block = JSON.parse(data.value);
+                    if (block.hash === hash) {
                         block = data.value;
+                    } else {
+                        console.log('Failed to retrieve block');
                     }
                 })
                 .on('error', err => {
