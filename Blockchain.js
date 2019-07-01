@@ -48,7 +48,7 @@ class Blockchain {
 
     // get block by hash
     async getBlockByHash(hash) {
-        return JSON.parse(await this.bd.getBlockByHash(hash));
+        return await this.bd.getBlockByHash(hash);
     }
 
     // get blocks by address
