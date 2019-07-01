@@ -44,7 +44,7 @@ class StarController {
                 };
                 let validAddress = this.memPool.isInMempoolValid(walletAddress);
                 if (validAddress) {
-                    let newBlock = JSON.parse(new Block(blockBody));
+                    let newBlock = new Block(blockBody);
                     this.blockchain.addBlock(newBlock).then(block => {
                         this.memPool.cleanMempoolValid(walletAddress);
                         res.send(this.getDecodedBlock(JSON.parse(block)));
