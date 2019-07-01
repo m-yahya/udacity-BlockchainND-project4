@@ -132,7 +132,7 @@ class StarController {
                 } else if (height == 0) {
                     res.send((star))
                 } else {
-                    res.send(this.getDecodedBlock(star));
+                    res.send(this.getDecodedBlock(JSON.parse(star)));
                 }
             })
         })
@@ -146,7 +146,7 @@ class StarController {
                 if (stars != undefined && stars.length > 0) {
                     let starByAddress = [];
                     stars.forEach(star => {
-                        starByAddress.push(this.getDecodedBlock(star));
+                        starByAddress.push(this.getDecodedBlock(JSON.parse(star)));
                     });
                     res.send(starByAddress);
                 } else {
