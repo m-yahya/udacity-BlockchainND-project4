@@ -24,7 +24,7 @@ class Blockchain {
     // Add new block
     async addBlock(block) {
         // block hash
-        block.hash = SHA256(JSON.stringify(block).toString());
+        block.hash = SHA256(JSON.stringify(block)).toString();
         // UTC timestamp
         block.time = new Date().getTime().toString().slice(0, -3);
         // block height
