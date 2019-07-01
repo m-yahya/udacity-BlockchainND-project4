@@ -55,14 +55,16 @@ class LevelSandbox {
     // get block by hash
     getBlockByHash(hash) {
         let self = this;
-        let block;
+        let block = null;
         return new Promise((resolve, reject) => {
             self.db.createReadStream()
                 .on('data', data => {
                     block = JSON.parse(data.value);
-                    if (block.hash === hash) {
+                    if (block.hash == hash) {
                         block = data.value;
+
                     } else {
+                        console.log(hash + '#' + block.hash);
                         console.log('Failed to retrieve block');
                     }
                 })
