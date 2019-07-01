@@ -32,7 +32,7 @@ class StarController {
             let starToAdd = req.body.star;
 
             if (walletAddress && starToAdd && starToAdd.story != undefined) {
-                let body = {
+                let blockBody = {
                     'star': {
                         'ra': starToAdd.ra,
                         'dec': starToAdd.dec,
@@ -44,10 +44,10 @@ class StarController {
                 };
                 let validAddress = this.memPool.isInMempoolValid(walletAddress);
                 if (validAddress) {
-                    let newBlock = new Block(body);
+                    let newBlock = JSON.parse(new Block(blockBody));
                     this.blockchain.addBlock(newBlock).then(block => {
                         this.memPool.cleanMempoolValid(walletAddress);
-                        res.send(this.getDecodedBlock(block));
+                        res.send(this.getDecodedBlock(JSON.parse(block)));
                     })
                 } else {
                     res.send({
@@ -56,6 +56,7 @@ class StarController {
                     })
                 }
             } else {
+
                 res.send({
                     success: 'false',
                     message: 'Star failed to retrieve, invalid request parameters'
@@ -63,6 +64,8 @@ class StarController {
             }
         })
     }
+
+
 
     // request validation endpoint
     requestValidation() {
