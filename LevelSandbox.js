@@ -61,7 +61,7 @@ class LevelSandbox {
                 .on('data', data => {
                     block = JSON.parse(data.value);
                     if (block.hash == hash) {
-                        block = data.value;
+                        block = JSON.parse(data.value);
 
                     } else {
                         console.log(hash + '#' + block.hash);
