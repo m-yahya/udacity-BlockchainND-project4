@@ -64,7 +64,6 @@ class LevelSandbox {
                         block = JSON.parse(data.value);
 
                     } else {
-                        console.log(hash + '#' + block.hash);
                         console.log('Failed to retrieve block');
                     }
                 })
