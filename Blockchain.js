@@ -104,5 +104,3 @@ class Blockchain {
     }
 }
 module.exports = Blockchain;
-
-new Blockchain().getBlockByHash('e0deba47f1074b4d9677f66f55b82c4f699d50a8ab642ab43a9be7c026d81d17').then(console.log)
