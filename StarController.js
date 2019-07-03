@@ -118,7 +118,7 @@ class StarController {
 
     // get star block by hash endpoint
     getStarByHash() {
-        this.app.get('/stars/hash/:hash', (req, res) => {
+        this.app.get('/stars/hash:hash', (req, res) => {
             let height;
             this.blockchain.getBlockHeight().then(result => {
                 height = result;
@@ -140,7 +140,7 @@ class StarController {
 
     // get star block by hash endpoint
     getStarByAddress() {
-        this.app.get('/stars/address/:address', (req, res) => {
+        this.app.get('/stars/address:address', (req, res) => {
 
             this.blockchain.getBlockByAddress(req.params.address).then(stars => {
                 if (stars != undefined && stars.length > 0) {
